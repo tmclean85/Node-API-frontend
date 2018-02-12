@@ -13,22 +13,34 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8000/notes/5a73f33156b6405b6fe76d19")
-    .then(res => res.json())
-    .then(
-      (result) => {
-        this.setState({
-          isLoaded: true,
-          items: result.items
-        });
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error
-        });
-      }
-    )
+
+    // var myFetch = {
+    //   'method': 'GET',
+    //   headers: {
+    //     'Origin': 'http://localhost:8000',
+    //   },
+    //   mode: 'cors',
+    //   body: JSON.stringify({speaker: 'Randy', quote: 'fuck the police', date: '2 Feb 2018'})
+    // };
+
+    // fetch("http://localhost:8000/notes", myFetch)
+    // .then(res => res.json())
+    // .then(
+    //   (result) => {
+    //     console.log(result);
+    //     this.setState({
+    //       isLoaded: true,
+    //       items: result.items
+    //     });
+    //   },
+    //   (error) => {
+    //     this.setState({
+    //       isLoaded: true,
+    //       error
+    //     });
+    //   }
+    // )
+
   }
 
   render() {
@@ -39,13 +51,7 @@ class App extends Component {
       return <div>Loading....</div>;
     } else {
       return (
-        <ul>
-          {items.map(item => (
-            <li key={item._id}>
-              {item.speaker}
-            </li>  
-          ))}
-        </ul>  
+        <h1>dis app</h1>
       );
     }
   }
