@@ -26,18 +26,19 @@ class App extends Component {
   }
 
   handleSubmit = (event) => {
+    event.preventDefault();
     alert('A quote was submitted: ' + this.state.speaker + ' said: ' + '"' + this.state.quote + '" on: ' + this.state.date);
     fetch("http://localhost:8000/notes", {
-      method: 'POST', 
-      'Accept': 'application/json, text/plain, */*', 
-      'Content-Type': 'application/json', 
-      body: {
-        speaker: 'Cody Hardman', 
-        quote: 'Damn it feels good to be hard coded', 
-        date: 'yolo'
-      }
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded", 
+      },
+      body: JSON.stringify({
+        speaker: "Cody Hardman", 
+        quote: "Damn it feels good to be hardcoded", 
+        date: "Feb 10th 2018"
+      })
     })
-    event.preventDefault();
   }
 
   componentDidMount = () => {
@@ -60,6 +61,7 @@ class App extends Component {
       );
     }
   }
+
 }
 
 export default App;
