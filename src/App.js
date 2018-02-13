@@ -8,21 +8,33 @@ class App extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      speaker: '',
+      quote: '',
+      date: new Date(),
     };
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleQuoteChange = this.handleQuoteChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleNameChange = (event) => {
+    this.setState({speaker: event.target.value});
+  }
+
+  handleQuoteChange = (event) => {
+    this.setState({quote: event.target.value});
+  }
+
+  handleSubmit = (event) => {
+    alert('A quote was submitted: ' + this.state.speaker + ' said: ' + '"' + this.state.quote + '" on: ' + this.state.date);
+    fetch("http://localhost:8000/notes", {'method': 'POST', body: JSON.stringify({speaker: this.state.speaker, quote: this.state.quote, date: this.state.date})})
+    event.preventDefault();
   }
 
   componentDidMount() {
+    this.setState({isLoaded: true});
 
-    // var myFetch = {
-    //   'method': 'GET',
-    //   headers: {
-    //     'Origin': 'http://localhost:8000',
-    //   },
-    //   mode: 'cors',
-    // };
-
-    // fetch("http://localhost:8000/notes", myFetch)
+    // fetch("http://localhost:8000/notes")
     // .then(res => res.json())
     // .then(
     //   (result) => {
@@ -49,7 +61,11 @@ class App extends Component {
       return <div>Loading....</div>;
     } else {
       return (
-        <h1>dis app</h1>
+        <form onSubmit={this.handleSubmit}>
+          <label>Name<input type="text" value={this.state.speaker} onChange={this.handleNameChange} /></label>
+          <label>Quote<input value={this.state.quote} onChange={this.handleQuoteChange} /></label>
+          <input type="submit" />
+        </form>  
       );
     }
   }
