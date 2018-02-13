@@ -20,7 +20,6 @@ class App extends Component {
     //     'Origin': 'http://localhost:8000',
     //   },
     //   mode: 'cors',
-    //   body: JSON.stringify({speaker: 'Randy', quote: 'fuck the police', date: '2 Feb 2018'})
     // };
 
     // fetch("http://localhost:8000/notes", myFetch)
@@ -40,7 +39,6 @@ class App extends Component {
     //     });
     //   }
     // )
-
   }
 
   render() {
