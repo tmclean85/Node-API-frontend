@@ -27,30 +27,21 @@ class App extends Component {
 
   handleSubmit = (event) => {
     alert('A quote was submitted: ' + this.state.speaker + ' said: ' + '"' + this.state.quote + '" on: ' + this.state.date);
-    fetch("http://localhost:8000/notes", {'method': 'POST', body: JSON.stringify({speaker: this.state.speaker, quote: this.state.quote, date: this.state.date})})
+    fetch("http://localhost:8000/notes", {
+      method: 'POST', 
+      'Accept': 'application/json, text/plain, */*', 
+      'Content-Type': 'application/json', 
+      body: {
+        speaker: 'Cody Hardman', 
+        quote: 'Damn it feels good to be hard coded', 
+        date: 'yolo'
+      }
+    })
     event.preventDefault();
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setState({isLoaded: true});
-
-    // fetch("http://localhost:8000/notes")
-    // .then(res => res.json())
-    // .then(
-    //   (result) => {
-    //     console.log(result);
-    //     this.setState({
-    //       isLoaded: true,
-    //       items: result.items
-    //     });
-    //   },
-    //   (error) => {
-    //     this.setState({
-    //       isLoaded: true,
-    //       error
-    //     });
-    //   }
-    // )
   }
 
   render() {
