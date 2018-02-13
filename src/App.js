@@ -31,12 +31,12 @@ class App extends Component {
     fetch("http://localhost:8000/notes", {
       method: "POST", 
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded", 
+        "Content-Type": "application/json", 
       },
       body: JSON.stringify({
-        speaker: "Cody Hardman", 
-        quote: "Damn it feels good to be hardcoded", 
-        date: "Feb 10th 2018"
+        "speaker": this.state.speaker, 
+        "quote": this.state.quote, 
+        "date": this.state.date
       })
     })
   }
