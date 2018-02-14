@@ -114,8 +114,7 @@ class App extends Component {
           </form>
           <ul>
             {
-              //if there is a speaker query stored in local state, map over the array of documents
-              //where the speaker matches the query
+              //if there is a speaker query stored in local state, map the array of documents where the speaker matches the query
               (queryQuotes.length)
                 ? queryQuotes.map(data => (
                     <li key={data._id}>
@@ -123,7 +122,7 @@ class App extends Component {
                       <button onClick={this.handleDelete} value={data._id}>delete</button>
                     </li>
                   ))
-                //else map over the entire collection
+                //else map the entire collection
                 : allQuotes.map(data => (
                     <li key={data._id}>
                       {data.speaker} said: {data.quote} on {data.date} 

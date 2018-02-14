@@ -1,5 +1,5 @@
 ## React front-end for NodeJS / MongoDB API
-A small React application to serve as the front-end for my API.
+A small React application built for CRUD operations on [the accompanying API I've built](https://github.com/tmclean85/Simple-NodeJS-API).
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
