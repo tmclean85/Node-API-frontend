@@ -12,6 +12,9 @@ class App extends Component {
       quote: '',
       date: new Date(),
       allQuotes: [],
+      queryQuotes: [],
+      speakerQuery: '',
+      deleteId: '',
     };
   }
 
@@ -21,6 +24,10 @@ class App extends Component {
 
   handleQuoteChange = (event) => {
     this.setState({quote: event.target.value});
+  }
+
+  handleSpeakerQueryChange = (event, speaker) => {
+    this.setState({speakerQuery: event.target.value});
   }
 
   handleSubmit = (event) => {
@@ -43,18 +50,42 @@ fetchAll = (event) => {
   fetch("http://localhost:8000/notes")
   .then(res => res.json())
   .then((result) => {
-    this.setState({allQuotes: []})
+    this.setState({queryQuotes: [], allQuotes: []})
     this.setState({allQuotes: result})
   })
   event.preventDefault();
 }
+
+fetchBySpeaker = (event) => {
+  var speaker = this.state.speakerQuery;
+  fetch("http://localhost:8000/notes?speaker=" + speaker)
+  .then(res => res.json())
+  .then((result) => {
+    this.setState({queryQuotes: [], allQuotes: []})
+    this.setState({queryQuotes: result})
+  })
+  event.preventDefault();
+}
+
+handleDelete = (event) => {
+  this.setState({deleteId: event.target.value});
+  var quoteId = this.state.deleteId;
+  if(quoteId) {
+    fetch("http://localhost:8000/notes/" + quoteId, {
+      method: "DELETE"
+    })
+    .then(res => console.log(res));
+  }
+  event.preventDefault();
+}
+
 
   componentDidMount = () => {
     this.setState({isLoaded: true});
   }
 
   render() {
-    const { error, isLoaded, allQuotes, speaker, quote } = this.state;
+    const { error, isLoaded, allQuotes, speaker, quote, speakerQuery, queryQuotes, deleteId } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -68,13 +99,25 @@ fetchAll = (event) => {
             <input type="submit" />
           </form>  
           <button onClick={this.fetchAll}>Get all</button>
+          <form onSubmit={this.fetchBySpeaker}>
+            <label>Query name<input value={speakerQuery} onChange={this.handleSpeakerQueryChange} /></label>
+            <input type="submit" />
+          </form>  
           <ul>
             {
-              (allQuotes.length)
-                ? allQuotes.map(data => (
-                    <li key={data._id}>{data.speaker} said: {data.quote}</li>
+              (queryQuotes.length)
+                ? queryQuotes.map(data => (
+                    <li key={data._id}>
+                      {data.speaker} said: {data.quote} on {data.date}
+                      <button onClick={this.handleDelete} value={data._id}>delete</button>
+                    </li>
                   ))
-                : null   
+                : allQuotes.map(data => (
+                    <li key={data._id}>
+                      {data.speaker} said: {data.quote} on {data.date} 
+                      <button onClick={this.handleDelete} value={data._id}>delete</button>
+                    </li>
+                  ))
             }
           </ul>  
         </div>  
