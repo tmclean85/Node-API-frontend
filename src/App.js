@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+var moment = require('moment');
 
 class App extends Component {
 
@@ -12,7 +13,7 @@ class App extends Component {
       speaker: '',
       quote: '',
       //TODO: format date
-      date: new Date(),
+      date: moment().format('MMMM Do YYYY'),
       allQuotes: [],
       queryQuotes: [],
       speakerQuery: '',
@@ -91,6 +92,7 @@ class App extends Component {
 
   componentDidMount = () => {
     this.setState({isLoaded: true});
+    this.fetchAll();
   }
 
   render() {
@@ -107,7 +109,6 @@ class App extends Component {
             <label>Quote<input value={quote} onChange={this.handleQuoteChange} /></label>
             <input type="submit" />
           </form>
-          <button onClick={this.fetchAll}>Get all</button>
           <form onSubmit={this.fetchBySpeaker}>
             <label>Query name<input value={speakerQuery} onChange={this.handleSpeakerQueryChange} /></label>
             <input type="submit" />
